@@ -24,5 +24,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     This is Index JSP page. <br>
+    <form action="upload.do" method="post" enctype="multipart/form-data">
+    	<input type="file" name="file"/>
+    	<input type="submit" value="submit">
+    </form>
   </body>
 </html>
