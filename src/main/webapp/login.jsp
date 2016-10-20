@@ -23,6 +23,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <a href="index.do">主页</a>
+    <a href="index.do">主页</a><a href="test/page.do">测试</a>
   </body>
 </html>

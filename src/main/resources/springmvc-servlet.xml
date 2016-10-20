@@ -10,11 +10,53 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/mvc
 		http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-		
-	<context:component-scan base-package="com.any.app.controller" />
 	
+	<!--  
+	显式地向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、
+	PersistenceAnnotationBeanPostProcessor 以及 RequiredAnnotationBeanPostProcessor 这 4 个BeanPostProcessor。
+	如果想使用@ Resource 、@ PostConstruct、@ PreDestroy等注解就必须声明CommonAnnotationBeanPostProcessor
+	如果想使用@PersistenceContext注解，就必须声明PersistenceAnnotationBeanPostProcessor的Bean。
+	如果想使用 @Required的注解，就必须声明RequiredAnnotationBeanPostProcessor的Bean。
+	-->
+	<context:annotation-config/>
+	
+	<!-- 
+	该配置项其实包含了自动注入上述processor的功能，因此当使用 <context:component-scan/> 后，
+	就可以将 <context:annotation-config/> 移除了。
+	 -->
+	<context:component-scan base-package="com.any.*.controller" />
+	
+	<!-- 
+	在Spring MVC上下文中定义一个org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
+	它会像一个检查员，对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，
+	如果不是静态资源的请求，才由DispatcherServlet继续处理。一般Web应用服务器默认的Servlet名称是"default"，
+	因此DefaultServletHttpRequestHandler可以找到它。
+	如果你所有的Web应用服务器的默认Servlet名称不是"default"，则需要通过default-servlet-name属性显示指定：
+	<mvc:default-servlet-handler default-servlet-name="所使用的Web服务器默认使用的Servlet名称" />
+	 -->
 	<mvc:default-servlet-handler/>
-	<mvc:annotation-driven/>
+	
+	<!-- 
+	由Spring MVC框架自己处理静态资源，并添加一些有用的附加值功能。
+	首先，<mvc:resources />允许静态资源放在任何地方，如WEB-INF目录下、类路径下等，你甚至可以将JavaScript等静态文件打到JAR包中。
+	通过location属性指定静态资源的位置，由于location属性是Resources类型，因此可以使用诸如"classpath:"等的资源前缀指定资源位置。
+	传统Web容器的静态资源只能放在Web容器的根路径下，<mvc:resources />完全打破了这个限制。
+
+	其次，<mvc:resources />依据当前著名的Page Speed、YSlow等浏览器优化原则对静态资源提供优化。
+	你可以通过cacheSeconds属性指定静态资源在浏览器端的缓存时间，一般可将该时间设置为一年，以充分利用浏览器端的缓存。
+	在输出静态资源时，会根据配置设置好响应报文头的Expires 和 Cache-Control值。
+
+	在接收到静态资源的获取请求时，会检查请求头的Last-Modified值，如果静态资源没有发生变化，则直接返回303相应状态码，
+	提示客户端使用浏览器缓存的数据，而非将静态资源的内容输出到客户端，以充分节省带宽，提高程序性能。
+	
+	 -->
+	<mvc:resources location="/,classpath:/WEB-INF/publicResources/" mapping="/resources/**" />
+	
+	<!-- 
+	自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,
+	是spring MVC为@Controllers分发请求所必须的。
+	 -->
+	<mvc:annotation-driven/><!-- 具体详细可选项配置参考：http://starscream.iteye.com/blog/1098880 -->
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
