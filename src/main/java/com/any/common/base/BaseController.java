@@ -9,9 +9,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+@Controller
 public class BaseController {
 
 	/**
@@ -31,4 +33,13 @@ public class BaseController {
 		return paramMap;
 	}
 	
+	/**
+	 * 将提交的String参数转换为Date类型
+	 * 参考资料：需要进一步研究
+	 * @param binder
+	 */
+	@InitBinder
+	public void initBinder(ServletRequestDataBinder binder){
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"),true));
+	}
 }

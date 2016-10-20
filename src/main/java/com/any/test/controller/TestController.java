@@ -30,8 +30,13 @@ public class TestController extends BaseController{
 		return "testout";
 	}
 	
-	@InitBinder
-	public void initBinder(ServletRequestDataBinder binder){
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"),true));
+	@RequestMapping(value="/date")
+	public String test(Date u){
+		if(u != null){
+			System.out.println(u);
+		}
+		
+		return "testout";
 	}
+	
 }

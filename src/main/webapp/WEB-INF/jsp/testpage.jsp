@@ -32,5 +32,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<br>
     	<input type="submit" value="提交">
     </form>
+    <br>
+    <br>
+    <form action="test/date.do" method="post">
+    	<input type="text" name="u"/>
+    	<br>
+    	<input type="submit" value="提交">
+    </form>
   </body>
 </html>
