@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    This is Index JSP page. <br>
+    This is Index JSP page. <br>${iterceptor}
     <form action="upload.do" method="post" enctype="multipart/form-data">
     	<input type="file" name="file"/>
     	<input type="submit" value="submit">

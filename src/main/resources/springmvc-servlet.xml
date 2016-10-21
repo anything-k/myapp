@@ -58,6 +58,15 @@
 	 -->
 	<mvc:annotation-driven/><!-- 具体详细可选项配置参考：http://starscream.iteye.com/blog/1098880 -->
 	
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+<!-- 			<mvc:mapping path="/home/**"/> -->
+			<bean class="com.any.app.interceptor.CommonInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>

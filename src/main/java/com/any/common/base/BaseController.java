@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 
 @Controller
 public class BaseController {
+	
+	protected Logger logger = LoggerFactory.getLogger(BaseController.class);
 
 	/**
 	 * 将请求参数封装进map

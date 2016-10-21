@@ -5,15 +5,7 @@
 
   <display-name>Archetype Created Web Application</display-name>
   
-  <context-param>
-  	<param-name>contextConfigLocation</param-name>
-  	<param-value>classpath*:spring.xml</param-value>
-  </context-param>
-  
-  <listener>
-  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  
+  <!-- springmvc 核心配置 -->
   <servlet>
   	<servlet-name>springmvc</servlet-name>
   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -29,6 +21,24 @@
   	<url-pattern>*.do</url-pattern>
   </servlet-mapping>
   
+  <!-- spring 核心配置 -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath*:spring.xml</param-value>
+  </context-param>
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  <!-- shrio配置 -->
+  <filter>
+  	<filter-name>shiro</filter-name>
+  	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>shiro</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   
   <welcome-file-list>
   	<welcome-file>login.jsp</welcome-file>
